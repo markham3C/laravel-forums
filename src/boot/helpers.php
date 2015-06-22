@@ -26,3 +26,15 @@ function LogException(\Exception $ex)
 {
     echo \App::make('exception')->handleException($ex);
 }
+
+
+/**
+ * Use Laravel's routing instead of Vanilla's. This allows the vanilla integration
+ * to function properly even if the laravel application is in a subdirectory and 
+ * not hosted at the root of the the web server
+ */
+if (class_exists('Url')) {
+	function SmartAsset($Destination = '', $WithDomain = FALSE, $AddVersion = FALSE) {		
+		return \Url::to($Destination);
+	}
+}

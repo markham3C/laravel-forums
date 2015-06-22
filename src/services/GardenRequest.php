@@ -8,11 +8,23 @@ namespace BishopB\Forum;
 class GardenRequest extends \Gdn_Request
 {
     /**
-     * We specifically always want our web root inside our route.
+     * Use Laravel's routing instead of Vanilla's. This allows the vanilla integration
+	 * to function properly even if the laravel application is in a subdirectory and 
+	 * not hosted at the root of the the web server
      */
     public function WebRoot($WebRoot = NULL)
     {
-        return forum_get_route_prefix();
+    	$full_url = \URL::to('/');
+		
+		//Remove the domain (http://www.example.com/) to create the the WebRoot that 
+		//Vanilla needs
+		$pos1 = strpos($full_url, '/');
+		$pos2 = strpos($full_url, '/', $pos1 + strlen('/'));
+		$pos3 = strpos($full_url, '/', $pos2 + strlen('/'));
+					
+    	$webroot = substr($full_url,$pos3);
+    	
+        return $webroot;
     }
 	
 	/**
