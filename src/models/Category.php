@@ -24,7 +24,7 @@ class Category extends BaseModel
         'Sort'                   => 'integer',
         'CssClass'               => 'max:50',
         'Photo'                  => 'max:255',
-        'PermissionCategoryID'   => 'integer|min:-1|exists:GDN_Permission,PermissionID',
+        'PermissionCategoryID'   => 'integer|min:-1',
         'PointsCategoryID'       => 'integer',
         'HideAllDiscussions'     => 'boolean',
         'DisplayAs'              => 'in:Categories,Discussions,Default',
