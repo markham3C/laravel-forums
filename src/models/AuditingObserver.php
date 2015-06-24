@@ -22,7 +22,7 @@ class AuditingObserver
      */
     public function creating(\Illuminate\Database\Eloquent\Model $model)
     {
-        if ($this->needs($model, 'InsertUserID')) {
+        if ($this->needs($model, 'InsertUserID') && $this->auth->user()) {
             $model->InsertUserID = $this->auth->user()->getKey();
             if ($this->needs($model, 'UpdateUserID')) {
                 $model->UpdateUserID = $model->InsertUserID;
@@ -49,7 +49,7 @@ class AuditingObserver
      */
     public function updating(\Illuminate\Database\Eloquent\Model $model)
     {
-        if ($this->needs($model, 'UpdateUserID')) {
+        if ($this->needs($model, 'UpdateUserID') && $this->auth->user()) {
             $model->UpdateUserID = $this->auth->user()->getKey();
         }
         if ($this->needs($model, 'DateUpdated')) {
@@ -67,7 +67,7 @@ class AuditingObserver
      */
     public function deleting(\Illuminate\Database\Eloquent\Model $model)
     {
-        if ($this->needs($model, 'DeleteUserID')) {
+        if ($this->needs($model, 'DeleteUserID') && $this->auth->user()) {
             $model->DeleteUserID = $this->auth->user()->getKey();
         }
         if ($this->needs($model, 'DateDeleted')) {

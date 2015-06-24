@@ -25,18 +25,4 @@ class Permission extends BaseModel
         );
     }
 
-    // custom
-    /**
-     * Any permission attribute we set needs to be boolean.
-     * Since Vanilla can add these columns at run time, we have to react at
-     * run-time.
-     */
-    public function setAttribute($key, $value)
-    {
-        if (str_contains($key, '.') && ! array_key_exists($key, $this->rules)) {
-            $this->getValidator()->addRule($key, 'boolean');
-        }
-
-        return parent::setAttribute($key, $value);
-    }
 }
