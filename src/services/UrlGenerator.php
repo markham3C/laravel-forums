@@ -13,11 +13,14 @@ class UrlGenerator extends \Illuminate\Routing\UrlGenerator
 {
     public function to($path, $parameters = null, $secure = false)
     {
-        return parent::to(
-            $this->rewrite_url($path),
-            (is_array($parameters) ? $parameters : []),
-            $secure
-        );
+    	$secure = (\Request::server('HTTP_X_FORWARDED_PROTO') == 'https');
+		$url = parent::to(
+	            $this->rewrite_url($path),
+	            (is_array($parameters) ? $parameters : []),
+	            $secure
+	        );
+			
+		return $url;
     }
 
     public function asset($path, $secure = null)
